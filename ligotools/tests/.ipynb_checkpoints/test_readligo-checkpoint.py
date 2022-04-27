@@ -133,9 +133,12 @@ def test_write():
     assert os.path.exists("tester")
     os.remove("tester")
 
-def test_exists():
+def test_plot():
     write_wavfile("tester", 4096, np.random.normal(0,1,100))
     confirmation = wavfile.read("tester")
     assert len(confirmation[1])==100
     
     os.remove("tester")
+    
+
+    
