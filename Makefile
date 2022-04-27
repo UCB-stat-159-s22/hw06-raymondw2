@@ -18,11 +18,22 @@ clean:
 	touch figurs/.gitkeep
     
 html:
-	jupyterbook build .
+	jupyter-book build .
+	ghp-import -n -p -f _build/html 
     
 html-hub:
-	jupyter execute analysis.ipynb
+	jupyter-book config sphinx .
+	sphinx-build  . _build/html -D html_baseurl=${JUPYTERHUB_SERVICE_PREFIX}/proxy/absolute/8000
+	@echo 'Please go to https://stat159.datahub.berkeley.edu/user-redirect/proxy/8000/index.html'
+	python -m http.server
+
+
+
+all:
+	conda activate ligo
+	jupyter execute index.ipynb
     
 env:
-	conda install -c conda-forge palettable
-	conda install -c conda-forge python-docx
+	conda env create -f environment.yml
+	conda activate ligo
+   
